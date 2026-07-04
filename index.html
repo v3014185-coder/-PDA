@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDA Interface - Large</title>
+    <title>PDA Interface - СОБ</title>
     <style>
         /* Базовые цвета PDA (Стиль милитари/сталкер) */
         body {
@@ -22,13 +22,13 @@
         /* УВЕЛИЧЕННЫЙ КОРПУС PDA */
         .pda-screen {
             width: 100%;
-            max-width: 800px; /* Сделали шире под большой текст */
-            min-height: 750px; /* Сделали выше */
+            max-width: 800px; 
+            min-height: 750px; 
             background-color: #0d0f0d;
             border: 5px solid #3a413a;
             border-radius: 15px;
             box-shadow: inset 0 0 30px rgba(57, 255, 20, 0.15), 0 0 25px rgba(0,0,0,0.7);
-            padding: 40px; /* Больше отступов внутри */
+            padding: 40px; 
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -55,15 +55,15 @@
             background-color: #1b261b;
             color: #39ff14;
             border: 2px solid #39ff14;
-            padding: 20px 40px; /* Кнопки стали массивнее */
+            padding: 20px 40px; 
             font-family: 'Courier New', Courier, monospace;
-            font-size: 18px; /* Шрифт крупнее */
+            font-size: 18px; 
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
             box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
             transition: all 0.2s ease;
-            width: 100%; /* Растягиваются по ширине контейнера */
+            width: 100%; 
             max-width: 400px;
         }
 
@@ -104,18 +104,18 @@
             border: 1px solid #224422;
             padding: 20px;
             border-radius: 5px;
-            max-height: 300px; /* Чтобы текст не растягивал КПК до бесконечности */
-            overflow-y: auto; /* Появится прокрутка, если текст огромный */
+            height: 350px; /* Фиксированная высота для экрана текста */
+            overflow-y: auto; 
             font-size: 16px;
             line-height: 1.5;
-            color: #a3ff8d; /* Чуть мягче зеленый для удобства чтения */
+            color: #a3ff8d; 
             margin-bottom: 15px;
         }
 
         /* Сетка кнопок управления */
         .buttons-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Две кнопки в ряд */
+            grid-template-columns: 1fr 1fr; 
             gap: 15px;
             width: 100%;
         }
@@ -135,34 +135,49 @@
             <button class="pda-btn" style="font-size: 22px; padding: 25px 50px;" onclick="activatePDA()">ОТКРЫТЬ КПК</button>
         </div>
 
-        <!-- Большое меню (Изначально скрыто) -->
+        <!-- Большое меню -->
         <div id="main-menu" class="menu-container hidden">
             <div class="menu-title">-- БОРТОВОЙ КПК: СЕТЬ АКТИВНА --</div>
             
-            <!-- Окно для вывода вашего большого текста -->
-            <div class="pda-text-display">
+            <!-- Окно для вывода информации -->
+            <div id="text-display" class="pda-text-display">
                 <strong>[ СИСТЕМНОЕ УВЕДОМЛЕНИЕ ]</strong><br>
-                Ожидание загрузки основного массива данных... Пожалуйста, отправьте ваш текст, чтобы наполнить этот терминал информацией.
+                Ожидание загрузки основного массива данных... Выберите интересующий раздел меню ниже для вывода информации на экран терминала.
             </div>
 
-            <!-- Сетка больших кнопок -->
+            <!-- Сетка из 4 новых кнопок -->
             <div class="buttons-grid">
-                <button class="pda-btn" style="max-width: 100%;">Главные Данные</button>
-                <button class="pda-btn" style="max-width: 100%;">Архив файлов</button>
-                <button class="pda-btn" style="max-width: 100%;">Логи системы</button>
-                <button class="pda-btn" style="max-width: 100%;">Журнал КПК</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('кодекс')">1. Кодекс</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('лор')">2. Лор СОБ</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('структура')">3. Структура</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('документация')">4. Документация</button>
             </div>
         </div>
 
     </div>
 
     <script>
+        // Функция включения КПК
         function activatePDA() {
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('main-menu').classList.remove('hidden');
+        }
+
+        // Функция переключения текста на экране
+        function showText(section) {
+            const display = document.getElementById('text-display');
+            
+            if (section === 'кодекс') {
+                display.innerHTML = `<strong>[ РАЗДЕЛ: КОДЕКС ]</strong><br><br>Вставьте сюда текст кодекса...`;
+            } else if (section === 'лор') {
+                display.innerHTML = `<strong>[ РАЗДЕЛ: ЛОР СОБ ]</strong><br><br>Вставьте сюда историю и лор СОБ...`;
+            } else if (section === 'структура') {
+                display.innerHTML = `<strong>[ РАЗДЕЛ: СТРУКТУРА ]</strong><br><br>Вставьте сюда иерархию и структуру...`;
+            } else if (section === 'документация') {
+                display.innerHTML = `<strong>[ РАЗДЕЛ: ДОКУМЕНТАЦИЯ ]</strong><br><br>Вставьте сюда официальные документы...`;
+            }
         }
     </script>
 
 </body>
 </html>
-
