@@ -137,9 +137,35 @@
             50% { opacity: 0; }
         }
     </style>
+</head>
+<body>
+
+    <div class="pda-screen">
+        
+        <!-- Стартовый экран -->
+        <div id="start-screen">
+            <button class="pda-btn" style="font-size: 22px; padding: 25px 50px;" onclick="activatePDA()">ОТКРЫТЬ КПК</button>
+        </div>
+
+        <!-- Главное меню (внутри добавлен блок текста, который пропадал!) -->
+        <div id="main-menu" class="menu-container hidden">
+            <div class="menu-title">-- БОРТОВОЙ КПК: СЕТЬ АКТИВНА --</div>
+            
+            <!-- Окно терминала -->
+            <div id="text-display" class="pda-text-display"></div>
+            
+            <!-- Кнопки управления -->
+            <div class="buttons-grid">
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('кодекс')">1. Кодекс</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('лор')">2. Лор СОБ</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('структура')">3. Структура</button>
+                <button class="pda-btn" style="max-width: 100%;" onclick="showText('документация')">4. Документация</button>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        // Скрипты загружены заранее, чтобы кнопки сразу их видели
         let typingInterval = null;
 
         const pdaDatabase = {
@@ -163,45 +189,8 @@
         function typeWriter(text) {
             clearInterval(typingInterval);
             const display = document.getElementById('text-display');
+            if(!display) return;
             display.innerHTML = '';
             
             let i = 0;
-            // Корректная замена переносов строк на теги
             let formattedText = text.split('\n');
-            let chars = [];
-            
-            for (let line of formattedText) {
-                for (let char of line) {
-                    chars.push(char);
-                }
-                chars.push('<br>');
-            }
-
-            typingInterval = setInterval(() => {
-                if (i < chars.length) {
-                    if (chars[i] === '<' && chars[i+1] === 'b' && chars[i+2] === 'r' && chars[i+3] === '>') {
-                        display.innerHTML += '<br>';
-                        i += 4;
-                    } else {
-                        display.innerHTML += chars[i];
-                        i++;
-                    }
-                    display.scrollTop = display.scrollHeight; 
-                } else {
-                    clearInterval(typingInterval);
-                }
-            }, 5); 
-        }
-
-        function showText(section) {
-            if (pdaDatabase[section]) {
-                typeWriter(pdaDatabase[section]);
-            }
-        }
-    </script>
-</head>
-<body>
-
-    <div class="pda-screen">
-        
-        <!-- Стартовый экран -->
